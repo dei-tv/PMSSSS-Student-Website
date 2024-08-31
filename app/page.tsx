@@ -1,54 +1,8 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/Z2EgbEXp7Rt
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import Link from 'next/link';
-import { SVGProps } from 'react';
 
 export default function Component() {
     return (
         <div className="flex min-h-[100dvh] flex-col">
-            <header className="flex h-14 items-center px-4 lg:px-6">
-                <Link
-                    href="#"
-                    className="flex items-center justify-center"
-                    prefetch={false}
-                >
-                    <FlagIcon className="h-6 w-6" />
-                    <span className="sr-only">Government Scholarship</span>
-                </Link>
-                <nav className="ml-auto flex gap-4 sm:gap-6">
-                    <Link
-                        href="#"
-                        className="text-sm font-medium underline-offset-4 hover:underline"
-                        prefetch={false}
-                    >
-                        About
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-sm font-medium underline-offset-4 hover:underline"
-                        prefetch={false}
-                    >
-                        Eligibility
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-sm font-medium underline-offset-4 hover:underline"
-                        prefetch={false}
-                    >
-                        Benefits
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-sm font-medium underline-offset-4 hover:underline"
-                        prefetch={false}
-                    >
-                        Apply
-                    </Link>
-                </nav>
-            </header>
             <main className="flex-1">
                 <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
                     <div className="container px-4 md:px-6">
@@ -345,25 +299,5 @@ export default function Component() {
                 </nav>
             </footer>
         </div>
-    );
-}
-
-function FlagIcon(props: SVGProps<SVGSVGElement>) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-            <line x1="4" x2="4" y1="22" y2="15" />
-        </svg>
     );
 }

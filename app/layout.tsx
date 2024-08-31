@@ -5,6 +5,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import { ProgressBar, ProgressBarProvider } from 'react-transition-progress';
 import { cn } from '@/lib/utils';
+import Navbar from '@/components/navbar';
 
 const fontHeading = Bricolage_Grotesque({
     subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
                 )}
             >
                 <ProgressBarProvider>
+                    <Navbar />
                     <ProgressBar className="fixed top-0 h-1 bg-sky-500 shadow-lg shadow-sky-500/20" />
                     {children}
                     <Toaster />

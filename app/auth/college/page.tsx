@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { startTransition, useState } from 'react';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,9 +33,11 @@ import {
     SignupFormData,
     signupSchema,
 } from '@/utils/types/forms';
+import { useProgress } from 'react-transition-progress';
 
 export default function LoginPage() {
     const [activeTab, setActiveTab] = useState('login');
+    const startProgress = useProgress();
 
     const Loginform = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
@@ -55,14 +57,21 @@ export default function LoginPage() {
     });
 
     const onSignupSubmit: SubmitHandler<SignupFormData> = (data) => {
-        signup(data);
-        toast.success('Account created successfully');
-        console.log(data);
+        startTransition(async () => {
+            startProgress();
+            signup(data);
+            toast.success('Account created successfully');
+            console.log(data);
+        });
     };
 
     const onLoginSubmit: SubmitHandler<LoginFormData> = (data) => {
-        login(data);
-        toast.success('Logged in successfully');
+        startTransition(async () => {
+            startProgress();
+            login(data);
+            toast.success('Logged in successfully');
+            console.log(data);
+        });
     };
 
     return (
