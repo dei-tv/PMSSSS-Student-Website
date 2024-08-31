@@ -17,59 +17,56 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-
-const signupSchema = z.object({
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    aicteId: z.string().min(10, 'AICTE ID must be at least 10 characters'),
-});
-
-const loginSchema = z.object({
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-});
-
-type SignupFormData = z.infer<typeof signupSchema>;
-type LoginFormData = z.infer<typeof loginSchema>;
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
+import { toast } from 'sonner';
+import {
+    LoginFormData,
+    loginSchema,
+    SignupFormData,
+    signupSchema,
+} from '@/utils/types/forms';
 
 export default function LoginPage() {
     const [activeTab, setActiveTab] = useState('login');
 
-    const {
-        register: signupRegister,
-        handleSubmit: signupHandleSubmit,
-        formState: { errors: signupErrors },
-    } = useForm<SignupFormData>({
-        resolver: zodResolver(signupSchema),
+    const Loginform = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
     });
 
-    const {
-        register: loginRegister,
-        handleSubmit: loginHandleSubmit,
-        formState: { errors: loginErrors },
-    } = useForm<LoginFormData>({
-        resolver: zodResolver(loginSchema),
+    const Signupform = useForm<SignupFormData>({
+        resolver: zodResolver(signupSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+            aicteId: '',
+        },
     });
 
     const onSignupSubmit: SubmitHandler<SignupFormData> = (data) => {
+        signup(data);
+        toast.success('Account created successfully');
         console.log(data);
     };
 
     const onLoginSubmit: SubmitHandler<LoginFormData> = (data) => {
-        console.log(data);
-    };
-
-    const handleKeyDown = (
-        event: React.KeyboardEvent<HTMLInputElement>,
-        submitHandler: () => void
-    ) => {
-        if (event.key === 'Enter') {
-            submitHandler();
-        }
+        login(data);
+        toast.success('Logged in successfully');
     };
 
     return (
-        <form className="flex h-screen items-center justify-center bg-background">
+        <main className="flex h-screen items-center justify-center bg-background">
             <Card className="w-full max-w-md">
                 <Tabs
                     defaultValue="login"
@@ -90,47 +87,65 @@ export default function LoginPage() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="m@example.com"
-                                    {...loginRegister('email')}
-                                    onKeyDown={(e) =>
-                                        handleKeyDown(
-                                            e,
-                                            loginHandleSubmit(onLoginSubmit)
-                                        )
-                                    }
-                                />
-                                {loginErrors.email?.message && (
-                                    <span>{loginErrors.email.message}</span>
-                                )}
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="password">Password</Label>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    {...loginRegister('password')}
-                                    onKeyDown={(e) =>
-                                        handleKeyDown(
-                                            e,
-                                            loginHandleSubmit(onLoginSubmit)
-                                        )
-                                    }
-                                />
-                                {loginErrors.password?.message && (
-                                    <span>{loginErrors.password.message}</span>
-                                )}
-                            </div>
+                            <Form {...Loginform}>
+                                <form
+                                    onSubmit={Loginform.handleSubmit(
+                                        onLoginSubmit
+                                    )}
+                                >
+                                    <FormField
+                                        control={Loginform.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem className="my-2 space-y-2">
+                                                <FormLabel htmlFor="email">
+                                                    Email ID
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        id="email"
+                                                        placeholder="m@example.com"
+                                                        type="email"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    The Email assigned to the
+                                                    representative.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={Loginform.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem className="my-2 space-y-2">
+                                                <FormLabel htmlFor="password">
+                                                    Password
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        id="password"
+                                                        type="password"
+                                                        className="text-secondary"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <Button
+                                        className="mt-6 w-full"
+                                        type="submit"
+                                    >
+                                        Login
+                                    </Button>
+                                </form>
+                            </Form>
                         </CardContent>
-                        <CardFooter>
-                            <Button className="w-full" formAction={login}>
-                                Login
-                            </Button>
-                        </CardFooter>
                     </TabsContent>
                     <TabsContent value="signup">
                         <CardHeader>
@@ -141,66 +156,91 @@ export default function LoginPage() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="m@example.com"
-                                    {...signupRegister('email')}
-                                    onKeyDown={(e) =>
-                                        handleKeyDown(
-                                            e,
-                                            signupHandleSubmit(onSignupSubmit)
-                                        )
-                                    }
-                                />
-                                {signupErrors.email?.message && (
-                                    <span>{signupErrors.email.message}</span>
-                                )}
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="password">Password</Label>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    {...signupRegister('password')}
-                                    onKeyDown={(e) =>
-                                        handleKeyDown(
-                                            e,
-                                            signupHandleSubmit(onSignupSubmit)
-                                        )
-                                    }
-                                />
-                                {signupErrors.password?.message && (
-                                    <span>{signupErrors.password.message}</span>
-                                )}
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="aicte-id">AICTE ID</Label>
-                                <Input
-                                    id="aicte-id"
-                                    {...signupRegister('aicteId')}
-                                    onKeyDown={(e) =>
-                                        handleKeyDown(
-                                            e,
-                                            signupHandleSubmit(onSignupSubmit)
-                                        )
-                                    }
-                                />
-                                {signupErrors.aicteId?.message && (
-                                    <span>{signupErrors.aicteId.message}</span>
-                                )}
-                            </div>
+                            <Form {...Signupform}>
+                                <form
+                                    onSubmit={Signupform.handleSubmit(
+                                        onSignupSubmit
+                                    )}
+                                >
+                                    <FormField
+                                        control={Signupform.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem className="my-2 space-y-2">
+                                                <FormLabel htmlFor="email">
+                                                    Email ID
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        id="email"
+                                                        placeholder="m@example.com"
+                                                        type="email"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    The Email assigned to the
+                                                    representative.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={Signupform.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem className="my-2 space-y-2">
+                                                <FormLabel htmlFor="password">
+                                                    Password
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        id="password"
+                                                        type="password"
+                                                        className="text-secondary"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={Signupform.control}
+                                        name="aicteId"
+                                        render={({ field }) => (
+                                            <FormItem className="my-2 space-y-2">
+                                                <FormLabel htmlFor="aicteid">
+                                                    AICTE ID
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        id="aicteid"
+                                                        type="text"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    The AICTE ID assigned to the
+                                                    college.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <Button
+                                        className="mt-6 w-full"
+                                        type="submit"
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </form>
+                            </Form>
                         </CardContent>
-                        <CardFooter>
-                            <Button className="w-full" formAction={signup}>
-                                Sign Up
-                            </Button>
-                        </CardFooter>
                     </TabsContent>
                 </Tabs>
             </Card>
-        </form>
+        </main>
     );
 }
