@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react';
+
 type ActionError = {
     message: string;
     code: string;
@@ -41,3 +43,10 @@ export const Action = {
         };
     },
 };
+
+interface NavButtonProps {
+    icon: LucideIcon;
+    section: string;
+}
+
+export type { NavButtonProps };

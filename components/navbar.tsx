@@ -12,7 +12,7 @@ export default function Navbar() {
     return (
         <header className="flex h-14 items-center px-4 lg:px-6">
             <Link
-                href="#"
+                href="/"
                 className="flex items-center justify-center"
                 prefetch={false}
             >

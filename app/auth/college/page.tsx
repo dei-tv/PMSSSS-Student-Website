@@ -1,6 +1,6 @@
 'use client';
 
-import { startTransition, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,10 +34,30 @@ import {
     signupSchema,
 } from '@/utils/types/forms';
 import { useProgress } from 'react-transition-progress';
+import { createClient } from '@/utils/supabase/client';
+import { redirect, useRouter } from 'next/navigation';
 
 export default function LoginPage() {
     const [activeTab, setActiveTab] = useState('login');
+    const Router = useRouter();
     const startProgress = useProgress();
+    const supabase = createClient();
+    useEffect(() => {
+        const awaitUser = async () => {
+            const {
+                data: { user },
+                error,
+            } = await supabase.auth.getUser();
+
+            if (error) {
+                Router.replace(`/?error=${error.message}`);
+            }
+            if (user) {
+                Router.replace('/dashboard/college');
+            }
+        };
+        awaitUser();
+    });
 
     const Loginform = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
