@@ -1,10 +1,23 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Bricolage_Grotesque } from 'next/font/google';
+import { Space_Mono } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import { ProgressBar, ProgressBarProvider } from 'react-transition-progress';
+import { cn } from '@/lib/utils';
 
-const inter = Inter({ subsets: ['latin'] });
+const fontHeading = Bricolage_Grotesque({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-heading',
+});
+
+const fontBody = Space_Mono({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-body',
+    weight: '400',
+});
 
 export const metadata: Metadata = {
     title: 'NextJS + Supabase Template',
@@ -18,7 +31,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body
+                className={cn(
+                    'antialiased',
+                    fontHeading.variable,
+                    fontBody.variable
+                )}
+            >
                 <ProgressBarProvider>
                     <ProgressBar className="fixed top-0 h-1 bg-sky-500 shadow-lg shadow-sky-500/20" />
                     {children}
