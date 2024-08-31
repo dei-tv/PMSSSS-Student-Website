@@ -49,9 +49,6 @@ export default function LoginPage() {
                 error,
             } = await supabase.auth.getUser();
 
-            if (error) {
-                Router.replace(`/?error=${error.message}`);
-            }
             if (user) {
                 Router.replace('/dashboard/college');
             }

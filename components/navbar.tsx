@@ -42,7 +42,7 @@ export default function Navbar() {
                     Benefits
                 </Link>
                 <Link
-                    href="#"
+                    href="/auth/student"
                     className="text-sm font-medium underline-offset-4 hover:underline"
                     prefetch={false}
                 >
