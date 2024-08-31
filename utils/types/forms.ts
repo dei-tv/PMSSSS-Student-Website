@@ -12,11 +12,11 @@ export const loginSchema = z.object({
 });
 
 export const studentAddSchema = z.object({
-    studentName: z.string().min(1, 'Student name is required'),
-    studentId: z.string().min(1, 'Student ID is required'),
-    course: z.string().min(1, 'Course name is required'),
+    studentName: z.string().min(5, 'Student name is required'),
+    studentId: z.string().min(5, 'Student ID is required'),
+    course: z.string().min(5, 'Course name is required'),
     email: z.string().email('Invalid email address'),
-    phone: z.string().min(1, 'Phone number is required'),
+    phone: z.string().min(10, 'Phone number is required'),
     address: z.string().min(1, 'Address is required'),
     gender: z.enum(['male', 'female', 'other']),
     dob: z.date({ required_error: 'A date of birth is required.' }),

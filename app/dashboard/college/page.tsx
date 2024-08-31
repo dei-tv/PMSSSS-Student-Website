@@ -12,7 +12,7 @@ import {
     CalendarIcon,
 } from 'lucide-react';
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React, { startTransition, useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { NavButtonProps } from '@/utils/types/core';
 import { Badge } from '@/components/ui/badge';
@@ -42,12 +42,22 @@ import { Calendar } from '@/components/ui/calendar';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cn } from '@/lib/utils';
+import { signUpStudent } from '@/utils/actions/auth';
+import { toast } from 'sonner';
+import { useProgress } from 'react-transition-progress';
 
 export default function Page() {
     const [activeSection, setActiveSection] = useState('home');
     const router = useRouter();
     const supabase = createClient();
     const { user } = useUserStore();
+    const startProgress = useProgress();
+
+    useEffect(() => {
+        if (user?.user_metadata.account_type !== 'college') {
+            router.replace('/');
+        }
+    }, [user]);
 
     const form = useForm<StudentAddFormData>({
         resolver: zodResolver(studentAddSchema),
@@ -62,7 +72,12 @@ export default function Page() {
     });
 
     const onSubmit: SubmitHandler<StudentAddFormData> = (data) => {
-        console.log(data);
+        startTransition(async () => {
+            startProgress();
+            signUpStudent(data);
+            toast.success('Account created successfully');
+            console.log(data);
+        });
     };
 
     const NavButton: React.FC<NavButtonProps> = ({ icon: Icon, section }) => (
