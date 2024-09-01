@@ -339,10 +339,10 @@ export default function Page() {
                 {/* Header */}
                 <header className="flex w-full items-center justify-between bg-gray-800 p-4">
                     <h1 className="text-xl font-semibold">College Dashboard</h1>
-                    <div className="flex flex-row items-center gap-1">
+                    <div className="flex flex-row items-center gap-3">
                         <Badge variant="secondary">{user?.email}</Badge>
                         <Button
-                            variant="outline"
+                            variant="destructive"
                             className="rounded-lg"
                             onClick={async () => {
                                 await supabase.auth.signOut();
