@@ -55,7 +55,7 @@ export default function Page() {
 
     useEffect(() => {
         if (user?.user_metadata.account_type !== 'college') {
-            router.replace('/');
+            router.replace('/dashboard/student');
         }
     }, [user]);
 

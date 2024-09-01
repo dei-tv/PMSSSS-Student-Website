@@ -38,9 +38,11 @@ import { Loader2 } from 'lucide-react';
 
 export default function Page() {
     const [activeTab, setActiveTab] = useState('login');
+    const [showSubmit, setShowSubmit] = useState(false);
     const startProgress = useProgress();
 
     const { execute: getOtp, loading } = useServerAction(signInWithOtp, () => {
+        setShowSubmit(true);
         toast.success('Otp Sent To your Mail');
     });
 
@@ -53,6 +55,7 @@ export default function Page() {
     });
 
     const onOtpSubmit: SubmitHandler<VerifyEmailOtpParams> = (data) => {
+        console.log(data);
         startTransition(async () => {
             startProgress();
             verifyStudentOtp(data);
@@ -114,6 +117,7 @@ export default function Page() {
                                     <Button
                                         variant={'secondary'}
                                         disabled={loading}
+                                        type="button"
                                         onClick={() => {
                                             const email =
                                                 formMethods.getValues('email');
@@ -123,57 +127,69 @@ export default function Page() {
                                         {loading && (
                                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                         )}
-                                        Send OTP
+                                        Send Mail
                                     </Button>
-                                    <FormField
-                                        control={formMethods.control}
-                                        name="token"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>
-                                                    One-Time Password
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <InputOTP
-                                                        maxLength={6}
-                                                        {...field}
-                                                    >
-                                                        <InputOTPGroup>
-                                                            <InputOTPSlot
-                                                                index={0}
-                                                            />
-                                                            <InputOTPSlot
-                                                                index={1}
-                                                            />
-                                                            <InputOTPSlot
-                                                                index={2}
-                                                            />
-                                                            <InputOTPSlot
-                                                                index={3}
-                                                            />
-                                                            <InputOTPSlot
-                                                                index={4}
-                                                            />
-                                                            <InputOTPSlot
-                                                                index={5}
-                                                            />
-                                                        </InputOTPGroup>
-                                                    </InputOTP>
-                                                </FormControl>
-                                                <FormDescription>
-                                                    Please enter the one-time
-                                                    password sent to your email.
-                                                </FormDescription>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <Button
-                                        className="mt-6 w-full"
-                                        type="submit"
-                                    >
-                                        Login
-                                    </Button>
+                                    {/* {showSubmit && (
+                                        <FormField
+                                            control={formMethods.control}
+                                            name="token"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        One-Time Password
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <InputOTP
+                                                            maxLength={6}
+                                                            {...field}
+                                                        >
+                                                            <InputOTPGroup>
+                                                                <InputOTPSlot
+                                                                    index={0}
+                                                                />
+                                                                <InputOTPSlot
+                                                                    index={1}
+                                                                />
+                                                                <InputOTPSlot
+                                                                    index={2}
+                                                                />
+                                                                <InputOTPSlot
+                                                                    index={3}
+                                                                />
+                                                                <InputOTPSlot
+                                                                    index={4}
+                                                                />
+                                                                <InputOTPSlot
+                                                                    index={5}
+                                                                />
+                                                            </InputOTPGroup>
+                                                        </InputOTP>
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Please enter the one-time
+                                                        password sent to your email.
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    )}
+                                    {showSubmit && (
+                                        <Button
+                                            className="mt-6 w-full"
+                                            type="submit"
+                                            onClick={() => {
+                                                console.log(formMethods.getValues());
+                                                startTransition(async () => {
+                                                    startProgress();
+                                                    verifyStudentOtp(formMethods.getValues());
+                                                    toast.success('Sign in successful');
+                                                });
+                                            }}
+                                        >
+                                            Login
+                                        </Button>
+                                    )} */}
                                 </form>
                             </FormProvider>
                         </CardContent>

@@ -96,11 +96,14 @@ export async function signInWithOtp(email: string) {
     };
     const { data, error } = await supabase.auth.signInWithOtp(Data);
 
-    if (data.user && data.session === null) {
-        return Action.success(data);
+    if (error) {
+        return Action.error({
+            message: error,
+            code: 'INVALID_OTP',
+        });
     }
 
-    return Action.error(error);
+    return Action.success(null);
 }
 
 export async function verifyStudentOtp(formData: VerifyEmailOtpParams) {
@@ -116,7 +119,10 @@ export async function verifyStudentOtp(formData: VerifyEmailOtpParams) {
         return Action.success(data);
     }
 
-    return Action.error(error);
+    return Action.error({
+        message: error,
+        code: 'INVALID_OTP',
+    });
 }
 export async function logout() {
     const supabase = createClient();
