@@ -212,7 +212,7 @@ export default function Page() {
                 </Tabs>
             </Card>
             <Image
-                src="/woohoo.png"
+                src="/woohoo.svg"
                 alt="Student"
                 width={800}
                 height={450}
