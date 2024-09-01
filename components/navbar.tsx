@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 export default function Navbar() {
     const pathname = usePathname();
 
-    if (/^\/dashboard\/(college|student)/.test(pathname)) {
+    if (/^\/dashboard\/(college|student)|^\/auth\/student/.test(pathname)) {
         return null;
     }
     return (
@@ -16,7 +16,7 @@ export default function Navbar() {
                 className="flex items-center justify-center"
                 prefetch={false}
             >
-                <FlagIcon className="h-6 w-6" />
+                <FlagIcon className="h-11 w-auto" />
                 <span className="sr-only">Government Scholarship</span>
             </Link>
             <nav className="ml-auto flex gap-4 sm:gap-6">

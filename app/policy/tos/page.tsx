@@ -1,6 +1,3 @@
-import FlagIcon from '@/components/ui/flagicon';
-import Link from 'next/link';
-
 export default function Component() {
     return (
         <div className="flex min-h-[100dvh] flex-col">
