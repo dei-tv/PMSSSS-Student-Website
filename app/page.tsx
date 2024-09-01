@@ -89,7 +89,7 @@ export default function Component() {
                                 </div>
                             </div>
                             <img
-                                src="/placeholder.svg"
+                                src="/1.jpg"
                                 alt="Scholarship"
                                 className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
                                 width="550"
