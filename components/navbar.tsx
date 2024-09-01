@@ -21,7 +21,7 @@ export default function Navbar() {
             </Link>
             <nav className="ml-auto flex gap-4 sm:gap-6">
                 <Link
-                    href="#"
+                    href="/about"
                     className="text-sm font-medium underline-offset-4 hover:underline"
                     prefetch={false}
                 >
