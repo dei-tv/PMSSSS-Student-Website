@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { useUserStore } from '@/utils/store/user.store';
 import { Badge } from '@/components/ui/badge';
+import { FileUpload } from '@/components/file-upload';
 
 export default function Page() {
     const [activeSection, setActiveSection] = useState('home');
@@ -74,6 +75,14 @@ export default function Page() {
         </Card>
     );
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        }).format(date);
+    };
     const StudentDetails = () => (
         <Card className="col-span-2 bg-gray-800 text-white">
             <CardHeader>
@@ -82,10 +91,61 @@ export default function Page() {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <p>Name: John Doe</p>
-                <p>Student ID: 12345678</p>
-                <p>Major: Computer Science</p>
-                <p>Year: Junior</p>
+                <p>
+                    Name:{' '}
+                    <Badge variant="secondary">
+                        {user?.user_metadata?.studentName}
+                    </Badge>
+                </p>
+                <p>
+                    Student ID:{' '}
+                    <Badge variant="secondary">
+                        {user?.user_metadata?.studentId}
+                    </Badge>
+                </p>
+                <p>
+                    Major:{' '}
+                    <Badge variant="secondary">
+                        {user?.user_metadata?.course}
+                    </Badge>
+                </p>
+                <p>
+                    Gender:{' '}
+                    <Badge variant="secondary">
+                        {user?.user_metadata?.gender}
+                    </Badge>
+                </p>
+                <p>
+                    Phone:{' '}
+                    <Badge variant="secondary">
+                        {user?.user_metadata?.phone}
+                    </Badge>
+                </p>
+                <p>
+                    Date of Birth:{' '}
+                    <Badge variant="secondary">
+                        {formatDate(user?.user_metadata?.dob)}
+                    </Badge>
+                </p>
+                <p>
+                    Address:{' '}
+                    <Badge variant="secondary">
+                        {user?.user_metadata?.address}
+                    </Badge>
+                </p>
+            </CardContent>
+        </Card>
+    );
+
+    const UpcomingDeadlines = () => (
+        <Card className="col-span-full mt-6 bg-gray-800 text-white">
+            <CardHeader>
+                <CardTitle className="text-2xl font-bold">
+                    Upload Documents
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <FileUpload />
             </CardContent>
         </Card>
     );
@@ -112,7 +172,7 @@ export default function Page() {
                         </Button>
                         <Badge variant="secondary">{user?.email}</Badge>
                         <Button
-                            variant="outline"
+                            variant="destructive"
                             className="rounded-lg"
                             onClick={async () => {
                                 await supabase.auth.signOut();
@@ -131,6 +191,7 @@ export default function Page() {
                         <AcademicPerformance />
                         <FinancialAid />
                         <StudentDetails />
+                        <UpcomingDeadlines />
                     </div>
                 </main>
             </div>
