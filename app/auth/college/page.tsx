@@ -171,7 +171,7 @@ export default function LoginPage() {
                                                         placeholder="john.doe@example.com"
                                                         type="email"
                                                         {...field}
-                                                        className="placeholder:text-white/50"
+                                                        className="placeholder:text-black/50"
                                                     />
                                                 </FormControl>
                                                 <FormDescription>
@@ -240,7 +240,7 @@ export default function LoginPage() {
                                                         placeholder="john.doe@example.com"
                                                         type="email"
                                                         {...field}
-                                                        className="placeholder:text-white/50"
+                                                        className="placeholder:text-black/50"
                                                     />
                                                 </FormControl>
                                                 <FormDescription>
