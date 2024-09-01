@@ -1,7 +1,6 @@
 'use client';
 
 import { startTransition, useEffect, useState } from 'react';
-import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { login, signup } from '@/utils/actions/auth';
@@ -35,13 +34,52 @@ import {
 } from '@/utils/types/forms';
 import { useProgress } from 'react-transition-progress';
 import { createClient } from '@/utils/supabase/client';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { Check, X } from 'lucide-react';
+
+const PasswordChecklist = ({ password }: { password: string }) => {
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+
+    return (
+        <ul className="mt-2 space-y-1">
+            <li
+                className={`flex flex-row items-center ${hasNumber ? 'text-green-500' : 'text-red-500'}`}
+            >
+                {hasNumber ? <Check /> : <X />}
+                <span className="ml-2">At least 1 number</span>
+            </li>
+            <li
+                className={`flex flex-row items-center ${hasSpecialChar ? 'text-green-500' : 'text-red-500'}`}
+            >
+                {hasSpecialChar ? <Check /> : <X />}
+                <span className="ml-2">At least 1 special symbol</span>
+            </li>
+            <li
+                className={`flex flex-row items-center ${hasUpperCase ? 'text-green-500' : 'text-red-500'}`}
+            >
+                {hasUpperCase ? <Check /> : <X />}
+                <span className="ml-2">At least 1 uppercase alphabet</span>
+            </li>
+            <li
+                className={`flex flex-row items-center ${hasLowerCase ? 'text-green-500' : 'text-red-500'}`}
+            >
+                {hasLowerCase ? <Check /> : <X />}
+                <span className="ml-2">At least 1 lowercase alphabet</span>
+            </li>
+        </ul>
+    );
+};
 
 export default function LoginPage() {
     const [activeTab, setActiveTab] = useState('login');
+    const [password, setPassword] = useState('');
     const Router = useRouter();
     const startProgress = useProgress();
     const supabase = createClient();
+
     useEffect(() => {
         const awaitUser = async () => {
             const {
@@ -130,9 +168,10 @@ export default function LoginPage() {
                                                 <FormControl>
                                                     <Input
                                                         id="email"
-                                                        placeholder="m@example.com"
+                                                        placeholder="john.doe@example.com"
                                                         type="email"
                                                         {...field}
+                                                        className="placeholder:text-white/50"
                                                     />
                                                 </FormControl>
                                                 <FormDescription>
@@ -155,7 +194,6 @@ export default function LoginPage() {
                                                     <Input
                                                         id="password"
                                                         type="password"
-                                                        className="text-secondary"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -199,9 +237,10 @@ export default function LoginPage() {
                                                 <FormControl>
                                                     <Input
                                                         id="email"
-                                                        placeholder="m@example.com"
+                                                        placeholder="john.doe@example.com"
                                                         type="email"
                                                         {...field}
+                                                        className="placeholder:text-white/50"
                                                     />
                                                 </FormControl>
                                                 <FormDescription>
@@ -224,10 +263,18 @@ export default function LoginPage() {
                                                     <Input
                                                         id="password"
                                                         type="password"
-                                                        className="text-secondary"
                                                         {...field}
+                                                        onChange={(e) => {
+                                                            setPassword(
+                                                                e.target.value
+                                                            );
+                                                            field.onChange(e);
+                                                        }}
                                                     />
                                                 </FormControl>
+                                                <PasswordChecklist
+                                                    password={password}
+                                                />
                                                 <FormMessage />
                                             </FormItem>
                                         )}
