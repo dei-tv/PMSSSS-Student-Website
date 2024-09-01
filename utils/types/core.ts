@@ -49,4 +49,10 @@ interface NavButtonProps {
     section: string;
 }
 
-export type { NavButtonProps };
+interface SpotlightComponentProps {
+    Byline: string;
+    Title: string;
+    Content: string;
+}
+
+export type { NavButtonProps, SpotlightComponentProps };

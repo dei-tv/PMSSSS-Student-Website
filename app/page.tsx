@@ -1,4 +1,25 @@
+import Spotlight from '@/components/ui/spotlight';
 import { Link } from 'react-transition-progress/next';
+
+const customContent = {
+    Spotlight: [
+        {
+            title: 'Submit Application',
+            content:
+                "Visit AICTE's PMSSS page and register. Go to AICTE JK Scholarship Portal and complete your application.",
+        },
+        {
+            title: 'Provide Supporting Documents',
+            content:
+                'Upload necessary documents and ensure you meet the academic requirements (60% marks for new applicants; 50% for renewals). Use a new email and phone number if reapplying.',
+        },
+        {
+            title: 'Application Review',
+            content:
+                'Your application will be reviewed to determine eligibility and selection.',
+        },
+    ],
+};
 
 export default function Component() {
     return (
@@ -212,15 +233,23 @@ export default function Component() {
                                 </p>
                             </div>
                         </div>
-                        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-                            <img
+                        <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12 xl:grid-cols-3">
+                            {/* <img
                                 src="/placeholder.svg"
                                 alt="Application"
                                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
                                 width="550"
                                 height="310"
-                            />
-                            <div className="flex flex-col justify-center space-y-4">
+                            /> */}
+                            {customContent.Spotlight.map((content, index) => (
+                                <Spotlight
+                                    key={index}
+                                    Byline={(index + 1).toString()}
+                                    Title={content.title}
+                                    Content={content.content}
+                                />
+                            ))}
+                            {/* <div className="flex flex-col justify-center space-y-4">
                                 <ul className="grid gap-6">
                                     <li>
                                         <div className="grid gap-1">
@@ -263,7 +292,7 @@ export default function Component() {
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </section>
