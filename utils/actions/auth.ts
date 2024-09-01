@@ -8,7 +8,11 @@ import {
     LoginFormData,
     SignupFormData,
     StudentAddFormData,
+    StudentOtpFormData,
+    StudentSignInFormData,
 } from '../types/forms';
+import { Action } from '../types/core';
+import { EmailOtpType, VerifyEmailOtpParams } from '@supabase/supabase-js';
 
 export async function login(formData: LoginFormData) {
     const supabase = createClient();
@@ -82,6 +86,38 @@ export async function signUpStudent(formData: StudentAddFormData) {
     return data;
 }
 
+export async function signInWithOtp(email: string) {
+    const supabase = createClient();
+    const Data = {
+        email: email,
+        options: {
+            shouldCreateUser: false,
+        },
+    };
+    const { data, error } = await supabase.auth.signInWithOtp(Data);
+
+    if (data.user && data.session === null) {
+        return Action.success(data);
+    }
+
+    return Action.error(error);
+}
+
+export async function verifyStudentOtp(formData: VerifyEmailOtpParams) {
+    const supabase = createClient();
+    const Data = {
+        email: formData.email,
+        token: formData.token,
+        type: 'email' as EmailOtpType,
+    };
+    const { data, error } = await supabase.auth.verifyOtp(Data);
+
+    if (data.user && data.session === null) {
+        return Action.success(data);
+    }
+
+    return Action.error(error);
+}
 export async function logout() {
     const supabase = createClient();
     const { error } = await supabase.auth.signOut();

@@ -19,19 +19,32 @@ import {
     FormDescription,
     FormMessage,
 } from '@/components/ui/form';
-import { Form, SubmitHandler, useForm } from 'react-hook-form';
+import { Form, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { VerifyEmailOtpParams } from '@supabase/supabase-js';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { studentOtpSchema } from '@/utils/types/forms';
 import { useProgress } from 'react-transition-progress';
 import { toast } from 'sonner';
-import { verifyStudentOtp } from '@/utils/actions/auth';
+import useSWR from 'swr';
+import { signInWithOtp, verifyStudentOtp } from '@/utils/actions/auth';
+import {
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSlot,
+} from '@/components/ui/input-otp';
+import { useServerAction } from '@/utils/hooks/use-server-action';
+import { Loader2 } from 'lucide-react';
 
 export default function Page() {
     const [activeTab, setActiveTab] = useState('login');
     const startProgress = useProgress();
-    const form = useForm<VerifyEmailOtpParams>({
+
+    const { execute: getOtp, loading } = useServerAction(signInWithOtp, () => {
+        toast.success('Otp Sent To your Mail');
+    });
+
+    const formMethods = useForm<VerifyEmailOtpParams>({
         resolver: zodResolver(studentOtpSchema),
         defaultValues: {
             email: '',
@@ -47,6 +60,7 @@ export default function Page() {
             console.log(data);
         });
     };
+
     return (
         <main className="flex h-screen items-center justify-evenly bg-[#F6F5F5]">
             <Card className="w-full max-w-md">
@@ -68,22 +82,24 @@ export default function Page() {
                                 account.
                             </CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-4">
-                            <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onOtpSubmit)}>
+                        <CardContent>
+                            <FormProvider {...formMethods}>
+                                <form
+                                    onSubmit={formMethods.handleSubmit(
+                                        onOtpSubmit
+                                    )}
+                                    className="space-y-4"
+                                >
                                     <FormField
-                                        control={form.control}
+                                        control={formMethods.control}
                                         name="email"
                                         render={({ field }) => (
-                                            <FormItem className="my-2 space-y-2">
-                                                <FormLabel htmlFor="email">
-                                                    Email ID
-                                                </FormLabel>
+                                            <FormItem>
+                                                <FormLabel>Email</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         id="email"
-                                                        placeholder="m@example.com"
-                                                        type="email"
+                                                        placeholder="Enter email"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -95,22 +111,59 @@ export default function Page() {
                                             </FormItem>
                                         )}
                                     />
+                                    <Button
+                                        variant={'secondary'}
+                                        disabled={loading}
+                                        onClick={() => {
+                                            const email =
+                                                formMethods.getValues('email');
+                                            getOtp(email);
+                                        }}
+                                    >
+                                        {loading && (
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        )}
+                                        Send OTP
+                                    </Button>
                                     <FormField
-                                        control={form.control}
-                                        name="password"
+                                        control={formMethods.control}
+                                        name="token"
                                         render={({ field }) => (
-                                            <FormItem className="my-2 space-y-2">
-                                                <FormLabel htmlFor="password">
-                                                    Password
+                                            <FormItem>
+                                                <FormLabel>
+                                                    One-Time Password
                                                 </FormLabel>
                                                 <FormControl>
-                                                    <Input
-                                                        id="password"
-                                                        type="password"
-                                                        className="text-secondary"
+                                                    <InputOTP
+                                                        maxLength={6}
                                                         {...field}
-                                                    />
+                                                    >
+                                                        <InputOTPGroup>
+                                                            <InputOTPSlot
+                                                                index={0}
+                                                            />
+                                                            <InputOTPSlot
+                                                                index={1}
+                                                            />
+                                                            <InputOTPSlot
+                                                                index={2}
+                                                            />
+                                                            <InputOTPSlot
+                                                                index={3}
+                                                            />
+                                                            <InputOTPSlot
+                                                                index={4}
+                                                            />
+                                                            <InputOTPSlot
+                                                                index={5}
+                                                            />
+                                                        </InputOTPGroup>
+                                                    </InputOTP>
                                                 </FormControl>
+                                                <FormDescription>
+                                                    Please enter the one-time
+                                                    password sent to your email.
+                                                </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
                                         )}
@@ -122,7 +175,7 @@ export default function Page() {
                                         Login
                                     </Button>
                                 </form>
-                            </Form>
+                            </FormProvider>
                         </CardContent>
                     </TabsContent>
                     <TabsContent value="signup">

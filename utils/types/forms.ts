@@ -24,8 +24,25 @@ export const studentAddSchema = z.object({
     // fatherPhone: z.string().min(1, "Father's phone number is required"),
 });
 
+export const studentSignInSchema = z.object({
+    email: z.string().email('Invalid email address'),
+});
+
+export const studentOtpSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    otp: z.string().min(6, 'OTP must be at least 6 characters'),
+});
+
+type StudentOtpFormData = z.infer<typeof studentOtpSchema>;
+type StudentSignInFormData = z.infer<typeof studentSignInSchema>;
 type SignupFormData = z.infer<typeof signupSchema>;
 type LoginFormData = z.infer<typeof loginSchema>;
 type StudentAddFormData = z.infer<typeof studentAddSchema>;
 
-export type { SignupFormData, LoginFormData, StudentAddFormData };
+export type {
+    SignupFormData,
+    LoginFormData,
+    StudentAddFormData,
+    StudentSignInFormData,
+    StudentOtpFormData,
+};
