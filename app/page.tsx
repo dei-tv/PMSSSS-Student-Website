@@ -2,7 +2,41 @@ import Spotlight from '@/components/ui/spotlight';
 import { Link } from 'react-transition-progress/next';
 
 const customContent = {
-    Spotlight: [
+    HowToApply: [
+        {
+            title: 'Financial Need',
+            content:
+                'Demonstrate financial need with a family income of ₹8,00,000 or less per year.',
+        },
+        {
+            title: 'Academic Excellence',
+            content:
+                'To maximize your chances with PMSSS, aim for at least 85% marks. With only 5,000 scholarships available, scoring above 80% is essential for a competitive edge',
+        },
+        {
+            title: 'Application Process',
+            content:
+                'Online Application: Applicants must apply online via the AICTE web portal',
+        },
+    ],
+    WhatYoullReceive: [
+        {
+            title: 'Living Allowance',
+            content:
+                '₹1 lakh per year, paid in two installments of ₹50,000 each, to help with books, stationery, hostel fees, and other expenses.',
+        },
+        {
+            title: 'Tuition Fees',
+            content:
+                'Coverage up to ₹30,000 per year for general courses, ₹2.25 lakhs for professional courses, and ₹3 lakhs for medical courses. The scholarship will cover actual fees as per the State Fee Regulatory Committee, if lower than these limits.',
+        },
+        {
+            title: 'Merit-Based Support',
+            content:
+                'A merit-based scholarship program specifically for students in Jammu and Kashmir, recognizing academic excellence.',
+        },
+    ],
+    AreYouEligible: [
         {
             title: 'Submit Application',
             content:
@@ -83,57 +117,15 @@ export default function Component() {
                                 </p>
                             </div>
                         </div>
-                        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-                            <img
-                                src="/placeholder.svg"
-                                alt="Eligibility"
-                                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-                                width="550"
-                                height="310"
-                            />
-                            <div className="flex flex-col justify-center space-y-4">
-                                <ul className="grid gap-6">
-                                    <li>
-                                        <div className="grid gap-1">
-                                            <h3 className="text-xl font-bold">
-                                                Academic Excellence
-                                            </h3>
-                                            <p className="text-muted-foreground">
-                                                To maximize your chances with
-                                                PMSSS, aim for at least 85%
-                                                marks. With only 5,000
-                                                scholarships available, scoring
-                                                above 80% is essential for a
-                                                competitive edge
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="grid gap-1">
-                                            <h3 className="text-xl font-bold">
-                                                Financial Need
-                                            </h3>
-                                            <p className="text-muted-foreground">
-                                                Demonstrate financial need with
-                                                a family income of ₹8,00,000 or
-                                                less per year.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="grid gap-1">
-                                            <h3 className="text-xl font-bold">
-                                                Application Process
-                                            </h3>
-                                            <p className="text-muted-foreground">
-                                                Online Application: Applicants
-                                                must apply online via the AICTE
-                                                web portal.
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12 xl:grid-cols-3">
+                            {customContent.HowToApply.map((content, index) => (
+                                <Spotlight
+                                    key={index}
+                                    Byline={(index + 1).toString()}
+                                    Title={content.title}
+                                    Content={content.content}
+                                />
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -155,63 +147,17 @@ export default function Component() {
                                 </p>
                             </div>
                         </div>
-                        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-                            <img
-                                src="/placeholder.svg"
-                                alt="Benefits"
-                                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-                                width="550"
-                                height="310"
-                            />
-                            <div className="flex flex-col justify-center space-y-4">
-                                <ul className="grid gap-6">
-                                    <li>
-                                        <div className="grid gap-1">
-                                            <h3 className="text-xl font-bold">
-                                                Tuition Fees
-                                            </h3>
-                                            <p className="text-muted-foreground">
-                                                Coverage up to ₹30,000 per year
-                                                for general courses, ₹2.25 lakhs
-                                                for professional courses, and ₹3
-                                                lakhs for medical courses. The
-                                                scholarship will cover actual
-                                                fees as per the State Fee
-                                                Regulatory Committee, if lower
-                                                than these limits.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="grid gap-1">
-                                            <h3 className="text-xl font-bold">
-                                                Living Allowance
-                                            </h3>
-                                            <p className="text-muted-foreground">
-                                                ₹1 lakh per year, paid in two
-                                                installments of ₹50,000 each, to
-                                                help with books, stationery,
-                                                hostel fees, and other expenses.
-                                                Directly deposited into the
-                                                student’s bank account.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="grid gap-1">
-                                            <h3 className="text-xl font-bold">
-                                                Merit-Based Support
-                                            </h3>
-                                            <p className="text-muted-foreground">
-                                                A merit-based scholarship
-                                                program specifically for
-                                                students in Jammu and Kashmir,
-                                                recognizing academic excellence.
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12 xl:grid-cols-3">
+                            {customContent.WhatYoullReceive.map(
+                                (content, index) => (
+                                    <Spotlight
+                                        key={index}
+                                        Byline={(index + 1).toString()}
+                                        Title={content.title}
+                                        Content={content.content}
+                                    />
+                                )
+                            )}
                         </div>
                     </div>
                 </section>
@@ -234,14 +180,16 @@ export default function Component() {
                             </div>
                         </div>
                         <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12 xl:grid-cols-3">
-                            {customContent.Spotlight.map((content, index) => (
-                                <Spotlight
-                                    key={index}
-                                    Byline={(index + 1).toString()}
-                                    Title={content.title}
-                                    Content={content.content}
-                                />
-                            ))}
+                            {customContent.AreYouEligible.map(
+                                (content, index) => (
+                                    <Spotlight
+                                        key={index}
+                                        Byline={(index + 1).toString()}
+                                        Title={content.title}
+                                        Content={content.content}
+                                    />
+                                )
+                            )}
                         </div>
                     </div>
                 </section>
