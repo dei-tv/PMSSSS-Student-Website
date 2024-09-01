@@ -30,7 +30,7 @@ export default function Page() {
     };
 
     return (
-        <main className="flex h-screen items-center justify-evenly bg-background">
+        <main className="flex h-screen items-center justify-evenly bg-[#F6F5F5]">
             <Card className="w-full max-w-md">
                 <Tabs
                     defaultValue="login"
@@ -129,11 +129,11 @@ export default function Page() {
                 </Tabs>
             </Card>
             <Image
-                src="/woohoo.jpg"
+                src="/woohoo.png"
                 alt="Student"
                 width={800}
                 height={450}
-                className="h-[calc(100%-1rem)] w-[50%] rounded-xl bg-gradient-to-b from-[#28354F] to-[#040312] object-cover"
+                className="h-[calc(100%-1rem)] w-[50%] rounded-xl bg-gradient-to-b from-[#28354F] to-[#040312] object-cover shadow-2xl"
             />
         </main>
     );
