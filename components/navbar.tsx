@@ -35,7 +35,7 @@ export default function Navbar() {
                     Eligibility
                 </Link>
                 <Link
-                    href="#"
+                    href="/benefits"
                     className="text-sm font-medium underline-offset-4 hover:underline"
                     prefetch={false}
                 >
