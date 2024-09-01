@@ -189,7 +189,7 @@ export default function Page() {
                             <h2>
                                 {' '}
                                 Ask your College Admin to create an account for
-                                you..
+                                you
                             </h2>
                         </CardContent>
                     </TabsContent>
