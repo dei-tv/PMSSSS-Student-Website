@@ -20,6 +20,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Form } from 'react-hook-form';
+import Image from 'next/image';
 
 export default function Page() {
     const [activeTab, setActiveTab] = useState('login');
@@ -29,7 +30,7 @@ export default function Page() {
     };
 
     return (
-        <main className="flex h-screen items-center justify-center bg-background">
+        <main className="flex h-screen items-center justify-evenly bg-background">
             <Card className="w-full max-w-md">
                 <Tabs
                     defaultValue="login"
@@ -127,6 +128,13 @@ export default function Page() {
                     </TabsContent>
                 </Tabs>
             </Card>
+            <Image
+                src="/woohoo.jpg"
+                alt="Student"
+                width={800}
+                height={450}
+                className="h-[calc(100%-1rem)] w-[50%] rounded-xl bg-gradient-to-b from-[#28354F] to-[#040312] object-cover"
+            />
         </main>
     );
 }
