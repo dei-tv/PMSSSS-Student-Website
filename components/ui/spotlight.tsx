@@ -40,13 +40,13 @@ const Spotlight: React.FC<SpotlightComponentProps> = ({
                 }}
             />
             <div>
-                <h3 className="text-base font-semibold leading-7 text-secondary">
+                <h1 className="text-xl font-semibold leading-7 text-secondary">
                     {Byline}
-                </h3>
-                <p className="text-sm leading-6 text-secondary-foreground">
+                </h1>
+                <h2 className="text-lg font-medium leading-6 text-primary">
                     {Title}
-                </p>
-                <div className="mt-4 text-sm leading-6 text-primary">
+                </h2>
+                <div className="mt-4 text-sm leading-6 text-border">
                     {Content}
                 </div>
             </div>
