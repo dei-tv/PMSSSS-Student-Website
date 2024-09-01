@@ -10,13 +10,17 @@ export default function Component() {
                             <div className="flex flex-col justify-center space-y-4">
                                 <div className="space-y-2">
                                     <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                                        Government Scholarship Program
+                                        Achieve More with PMSSS
                                     </h1>
                                     <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                                        Unlock your academic potential with our
-                                        prestigious government scholarship.
-                                        Explore the life-changing opportunities
-                                        awaiting you.
+                                        Elevate Your Education with PMSSS.
+                                        Unlock Your Potential with Our
+                                        Scholarships. Transform your future with
+                                        the Prime Minister's Special Scholarship
+                                        Scheme. Get the financial support you
+                                        need for higher education and open doors
+                                        to opportunities that pave the way to
+                                        success.
                                     </p>
                                 </div>
                                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -47,13 +51,14 @@ export default function Component() {
                                     Eligibility Criteria
                                 </div>
                                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                                    Who Can Apply?
+                                    Are You Eligible? Check Your Criteria
                                 </h2>
                                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                                    The government scholarship is open to all
-                                    eligible students who meet the academic and
-                                    financial requirements. Explore the criteria
-                                    and unlock your educational dreams.
+                                    The scholarship is available to all
+                                    qualified students who fulfill the academic
+                                    and financial criteria. Discover the
+                                    eligibility requirements and open the door
+                                    to your educational aspirations.
                                 </p>
                             </div>
                         </div>
@@ -73,9 +78,12 @@ export default function Component() {
                                                 Academic Excellence
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Maintain a minimum GPA of 3.5 or
-                                                above to be eligible for the
-                                                scholarship.
+                                                To maximize your chances with
+                                                PMSSS, aim for at least 85%
+                                                marks. With only 5,000
+                                                scholarships available, scoring
+                                                above 80% is essential for a
+                                                competitive edge
                                             </p>
                                         </div>
                                     </li>
@@ -85,21 +93,21 @@ export default function Component() {
                                                 Financial Need
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Demonstrate financial need based
-                                                on household income and assets.
+                                                Demonstrate financial need with
+                                                a family income of ₹8,00,000 or
+                                                less per year.
                                             </p>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="grid gap-1">
                                             <h3 className="text-xl font-bold">
-                                                Extracurricular Activities
+                                                Application Process
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Actively participate in
-                                                community service, leadership
-                                                roles, or other extracurricular
-                                                activities.
+                                                Online Application: Applicants
+                                                must apply online via the AICTE
+                                                web portal.
                                             </p>
                                         </div>
                                     </li>
@@ -142,9 +150,14 @@ export default function Component() {
                                                 Tuition Fees
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Full coverage of tuition fees
-                                                for the duration of your
-                                                program.
+                                                Coverage up to ₹30,000 per year
+                                                for general courses, ₹2.25 lakhs
+                                                for professional courses, and ₹3
+                                                lakhs for medical courses. The
+                                                scholarship will cover actual
+                                                fees as per the State Fee
+                                                Regulatory Committee, if lower
+                                                than these limits.
                                             </p>
                                         </div>
                                     </li>
@@ -154,21 +167,25 @@ export default function Component() {
                                                 Living Allowance
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Monthly stipend to cover living
-                                                expenses, including housing,
-                                                food, and transportation.
+                                                ₹1 lakh per year, paid in two
+                                                installments of ₹50,000 each, to
+                                                help with books, stationery,
+                                                hostel fees, and other expenses.
+                                                Directly deposited into the
+                                                student’s bank account.
                                             </p>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="grid gap-1">
                                             <h3 className="text-xl font-bold">
-                                                Academic Support
+                                                Merit-Based Support
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Access to mentorship, tutoring,
-                                                and resources to ensure your
-                                                academic success.
+                                                A merit-based scholarship
+                                                program specifically for
+                                                students in Jammu and Kashmir,
+                                                recognizing academic excellence.
                                             </p>
                                         </div>
                                     </li>
@@ -211,10 +228,10 @@ export default function Component() {
                                                 Submit Application
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Complete the online application
-                                                form with the required personal,
-                                                academic, and financial
-                                                information.
+                                                Visit AICTE's PMSSS page and
+                                                register. Go to AICTE JK
+                                                Scholarship Portal and complete
+                                                your application.
                                             </p>
                                         </div>
                                     </li>
@@ -224,10 +241,12 @@ export default function Component() {
                                                 Provide Supporting Documents
                                             </h3>
                                             <p className="text-muted-foreground">
-                                                Upload the necessary documents,
-                                                such as transcripts, financial
-                                                statements, and letters of
-                                                recommendation.
+                                                Upload necessary documents and
+                                                ensure you meet the academic
+                                                requirements (60% marks for new
+                                                applicants; 50% for renewals).
+                                                Use a new email and phone number
+                                                if reapplying.
                                             </p>
                                         </div>
                                     </li>
@@ -238,8 +257,7 @@ export default function Component() {
                                             </h3>
                                             <p className="text-muted-foreground">
                                                 Your application will be
-                                                carefully reviewed by our panel
-                                                of experts to determine your
+                                                reviewed to determine
                                                 eligibility and selection.
                                             </p>
                                         </div>
