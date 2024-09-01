@@ -28,7 +28,7 @@ export default function Navbar() {
                     About
                 </Link>
                 <Link
-                    href="#"
+                    href="/eligibility"
                     className="text-sm font-medium underline-offset-4 hover:underline"
                     prefetch={false}
                 >
