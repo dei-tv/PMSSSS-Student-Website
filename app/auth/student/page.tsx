@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { startTransition, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,16 +19,34 @@ import {
     FormDescription,
     FormMessage,
 } from '@/components/ui/form';
-import { Form } from 'react-hook-form';
+import { Form, SubmitHandler, useForm } from 'react-hook-form';
 import Image from 'next/image';
+import { VerifyEmailOtpParams } from '@supabase/supabase-js';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { studentOtpSchema } from '@/utils/types/forms';
+import { useProgress } from 'react-transition-progress';
+import { toast } from 'sonner';
+import { verifyStudentOtp } from '@/utils/actions/auth';
 
 export default function Page() {
     const [activeTab, setActiveTab] = useState('login');
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle sign-in logic here
-    };
+    const startProgress = useProgress();
+    const form = useForm<VerifyEmailOtpParams>({
+        resolver: zodResolver(studentOtpSchema),
+        defaultValues: {
+            email: '',
+            token: '',
+        },
+    });
 
+    const onOtpSubmit: SubmitHandler<VerifyEmailOtpParams> = (data) => {
+        startTransition(async () => {
+            startProgress();
+            verifyStudentOtp(data);
+            toast.success('Sign in successful');
+            console.log(data);
+        });
+    };
     return (
         <main className="flex h-screen items-center justify-evenly bg-[#F6F5F5]">
             <Card className="w-full max-w-md">
@@ -51,64 +69,60 @@ export default function Page() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            {/* <Form {...Loginform}>
-                        <form
-                            onSubmit={Loginform.handleSubmit(
-                                onLoginSubmit
-                            )}
-                        >
-                            <FormField
-                                control={Loginform.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem className="my-2 space-y-2">
-                                        <FormLabel htmlFor="email">
-                                            Email ID
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                id="email"
-                                                placeholder="m@example.com"
-                                                type="email"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormDescription>
-                                            The Email assigned to the
-                                            representative.
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={Loginform.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem className="my-2 space-y-2">
-                                        <FormLabel htmlFor="password">
-                                            Password
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                id="password"
-                                                type="password"
-                                                className="text-secondary"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <Button
-                                className="mt-6 w-full"
-                                type="submit"
-                            >
-                                Login
-                            </Button>
-                        </form>
-                    </Form> */}
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onOtpSubmit)}>
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem className="my-2 space-y-2">
+                                                <FormLabel htmlFor="email">
+                                                    Email ID
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        id="email"
+                                                        placeholder="m@example.com"
+                                                        type="email"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    The Email assigned to the
+                                                    representative.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem className="my-2 space-y-2">
+                                                <FormLabel htmlFor="password">
+                                                    Password
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        id="password"
+                                                        type="password"
+                                                        className="text-secondary"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <Button
+                                        className="mt-6 w-full"
+                                        type="submit"
+                                    >
+                                        Login
+                                    </Button>
+                                </form>
+                            </Form>
                         </CardContent>
                     </TabsContent>
                     <TabsContent value="signup">
