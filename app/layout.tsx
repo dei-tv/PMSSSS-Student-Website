@@ -22,8 +22,8 @@ const fontBody = Space_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'NextJS + Supabase Template',
-    description: 'Created By greeenboi',
+    title: 'PMSSS - AICTE',
+    description: 'An online scholarship distribution portal',
 };
 
 export default function RootLayout({
